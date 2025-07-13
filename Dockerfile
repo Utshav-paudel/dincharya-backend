@@ -11,8 +11,11 @@ RUN chmod +x ./pocketbase
 # Create data directory
 RUN mkdir -p /app/pb_data
 
-# Expose port
-EXPOSE 8080
+# Set default port
+ENV PORT=8080
 
-# Start PocketBase
-CMD ["./pocketbase", "serve", "--http", "0.0.0.0:8080", "--dir", "/app/pb_data"]
+# Expose port
+EXPOSE $PORT
+
+# Start PocketBase with environment variable handling
+CMD ["sh", "-c", "./pocketbase serve --http 0.0.0.0:${PORT:-8080}"]
